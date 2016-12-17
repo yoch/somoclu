@@ -35,19 +35,22 @@ using namespace std;
  * @param nDimensions - dimensions of a data instance
  */
 int saveCodebook(string cbFilename, float *codebook, unsigned int nSomX, unsigned int nSomY, unsigned int nDimensions) {
-    FILE* file = fopen(cbFilename.c_str(), "wt");
+    FILE* file = fopen(cbFilename.c_str(), "wb");
     cout << "    Saving Codebook " << cbFilename << endl;
-    fprintf(file, "%%%d %d\n", nSomY, nSomX);
-    fprintf(file, "%%%d\n", nDimensions);
+
     if (file != 0) {
+        fprintf(file, "%d %d %d\n", nSomY, nSomX, nDimensions);
+        fwrite((const void *) codebook, sizeof(*codebook), nSomY * nSomX * nDimensions, file);
+/*
         for (unsigned int som_y = 0; som_y < nSomY; som_y++) {
             for (unsigned int som_x = 0; som_x < nSomX; som_x++) {
                 for (unsigned int d = 0; d < nDimensions; d++) {
-                    fprintf(file, "%0.10f ", codebook[som_y * nSomX * nDimensions + som_x * nDimensions + d]);
+                    fprintf(file, "%g ", codebook[som_y * nSomX * nDimensions + som_x * nDimensions + d]);
                 }
                 fprintf(file, "\n");
             }
         }
+*/
         fclose(file);
         return 0;
     }

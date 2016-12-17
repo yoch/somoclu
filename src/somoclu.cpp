@@ -453,10 +453,13 @@ int main(int argc, char** argv)
         cerr << "Total training Time: " << training_time << endl;
     }
 #endif
+
+
     ///
     /// Save SOM map and u-mat
     ///
     if (rank == 0) {
+/*
         ///
         /// Save U-mat
         ///
@@ -469,11 +472,14 @@ int main(int argc, char** argv)
             cout << "    Done!" << endl;
         }
         saveBmus(outPrefix + string(".bm"), globalBmus, nSomX, nSomY, nVectors);
+*/
         ///
         /// Save codebook
         ///
         saveCodebook(outPrefix + string(".wts"), codebook, nSomX, nSomY, nDimensions);
     }
+
+
 #ifdef HAVE_MPI
     MPI_Barrier(MPI_COMM_WORLD);
 #endif
